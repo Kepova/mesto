@@ -1,0 +1,18 @@
+.element__like {
+  width: 25px;
+  height: 23px;
+  align-self: start;
+  background-color: #fff;
+  background-image: url(../../../images/element__like.svg);
+  background-repeat: no-repeat;
+  border: none;
+  margin: 5px 15px 30px 0;
+}
+
+.element__like:hover {
+  background-image: url(../../../images/element__like_hover.svg);
+}
+
+.element__like:active {
+  background-image: url(../../../images/element__like_active.png);
+}
