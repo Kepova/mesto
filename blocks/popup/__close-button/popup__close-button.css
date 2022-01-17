@@ -8,7 +8,8 @@
   background-size: cover;
   position: absolute;
   left: 438px;
-  top: -40px
+  top: -40px;
+  transition: opacity .3s;
 }
 
 .popup__close-button:hover {
