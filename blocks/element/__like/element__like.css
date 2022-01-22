@@ -2,7 +2,7 @@
   width: 25px;
   height: 23px;
   align-self: start;
-  background-color: #fff;
+  background-color: transparent;
   background-image: url(../../../images/element__like.svg);
   background-repeat: no-repeat;
   border: none;
@@ -11,9 +11,10 @@
 }
 
 .element__like:hover {
-  background-image: url(../../../images/element__like_hover.svg);
+  opacity: .5;
 }
 
 .element__like:active {
+  opacity: 1;
   background-image: url(../../../images/element__like_active.png);
 }
