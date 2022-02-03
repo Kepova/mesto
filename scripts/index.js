@@ -37,6 +37,7 @@ function renderCards (item) {
   newCard.querySelector('.element__img').src = item.link;
 
   newCard.querySelector('.element__like').addEventListener('click', likeHundler);
+  newCard.querySelector('.element__delete-button').addEventListener('click', deleteCardHendler);
 
   cardsList.append(newCard);
 }
@@ -99,8 +100,14 @@ saveButtonPopupAdd.addEventListener('click', formAddSubmitHandler);
 
 // Лайк
 
-function likeHundler (event) {
-  event.target.classList.toggle('element__like_active');
+function likeHundler (evt) {
+  evt.target.classList.toggle('element__like_active');
 };
+
+// Удаление карточки
+
+function deleteCardHendler (evt) {
+  evt.target.closest('.element').remove();
+}
 
 render ();
