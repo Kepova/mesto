@@ -24,27 +24,30 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.elements');
 const addButton = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup__add');
-const closeButtonPopupAdd = popupAdd.querySelector('.popup__close-button');
+const closeButtonPopupAdd = document.querySelector('.popup__add_button_close');
+const saveButtonPopupAdd = document.querySelector('.popup__add_button_save');
+const inputAddTitle = popupAdd.querySelector('.popup__input_info_title');
+const inputAddImgSrc = popupAdd.querySelector('.popup__input_info_img-src');
+let card;
 
 
 // Добавление карточек
-
-function render () {
-  cards.forEach(renderCards);
-}
-
 function renderCards (item) {
   const newCard = template.cloneNode(true);
-  newCard.querySelector('.element__title').innerText = item.name;
+  newCard.querySelector('.element__title').textContent = item.name;
   newCard.querySelector('.element__img').src = item.link;
 
   cardsList.append(newCard);
 }
 
+function render () {
+  cards.forEach(renderCards);
+}
+
 // Попап редактирования профиля
 
-function openPopup(event) {
-  event.classList.add('popup_opened');
+function openPopup(evt) {
+  evt.classList.add('popup_opened');
 }
 
 editButton.addEventListener('click', function () {
@@ -53,8 +56,8 @@ editButton.addEventListener('click', function () {
   popupProfession.value = profileSubtitle.textContent;
 });
 
-function closePopup(event) {
-  event.classList.remove('popup_opened');
+function closePopup(evt) {
+  evt.classList.remove('popup_opened');
 }
 
 closeButton.addEventListener('click', function () {
@@ -80,5 +83,17 @@ closeButtonPopupAdd.addEventListener('click', function () {
   closePopup(popupAdd);
 });
 
+function formAddSubmitHandler (evt) {
+  evt.preventDefault();
+
+  card = template.cloneNode(true);
+  card.querySelector('.element__title').textContent = `${inputAddTitle.value}`;
+  card.querySelector('.element__img').src = `${inputAddImgSrc.value}`;
+
+  cardsList.prepend(card);
+  closePopup(popupAdd);
+}
+
+saveButtonPopupAdd.addEventListener('click', formAddSubmitHandler);
 
 render ();
