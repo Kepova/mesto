@@ -14,14 +14,20 @@ const cards = [
 ];
 const template = document.querySelector('.template-item').content;
 const editButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup');
-const closeButton = popup.querySelector('.popup__close-button');
-const popupName = popup.querySelector('.popup__input_info_name');
-const popupProfession = popup.querySelector('.popup__input_info_profession');
+const popupEdit = document.querySelector('.popup__edit');
+const closeButton = popupEdit.querySelector('.popup__close-button');
+const popupName = popupEdit.querySelector('.popup__input_info_name');
+const popupProfession = popupEdit.querySelector('.popup__input_info_profession');
+const formElement = popupEdit.querySelector('.popup__container');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const formElement = popup.querySelector('.popup__container');
 const cardsList = document.querySelector('.elements');
+const addButton = document.querySelector('.profile__add-button');
+const popupAdd = document.querySelector('.popup__add');
+const closeButtonPopupAdd = popupAdd.querySelector('.popup__close-button');
+
+
+// Добавление карточек
 
 function render () {
   cards.forEach(renderCards);
@@ -35,19 +41,25 @@ function renderCards (item) {
   cardsList.append(newCard);
 }
 
-function openPopup() {
-  popup.classList.add('popup_opened');
+// Попап редактирования профиля
+
+function openPopup(event) {
+  event.classList.add('popup_opened');
+}
+
+editButton.addEventListener('click', function () {
+  openPopup(popupEdit);
   popupName.value = profileTitle.textContent;
   popupProfession.value = profileSubtitle.textContent;
+});
+
+function closePopup(event) {
+  event.classList.remove('popup_opened');
 }
 
-editButton.addEventListener('click', openPopup);
-
-function closePopup() {
-  popup.classList.remove('popup_opened');
-}
-
-closeButton.addEventListener('click', closePopup);
+closeButton.addEventListener('click', function () {
+  closePopup(popupEdit);
+});
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
@@ -57,5 +69,16 @@ function formSubmitHandler (evt) {
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
+
+// Попап добавления карточки
+
+addButton.addEventListener('click', function () {
+  openPopup(popupAdd);
+});
+
+closeButtonPopupAdd.addEventListener('click', function () {
+  closePopup(popupAdd);
+});
+
 
 render ();
