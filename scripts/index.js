@@ -30,12 +30,13 @@ const inputAddTitle = popupAdd.querySelector('.popup__input_info_title');
 const inputAddImgSrc = popupAdd.querySelector('.popup__input_info_img-src');
 let card;
 
-
 // Добавление карточек
 function renderCards (item) {
   const newCard = template.cloneNode(true);
   newCard.querySelector('.element__title').textContent = item.name;
   newCard.querySelector('.element__img').src = item.link;
+
+  newCard.querySelector('.element__like').addEventListener('click', likeHundler);
 
   cardsList.append(newCard);
 }
@@ -68,7 +69,7 @@ function formSubmitHandler (evt) {
   evt.preventDefault();
   profileTitle.textContent = `${popupName.value}`;
   profileSubtitle.textContent = `${popupProfession.value}`;
-  closePopup()
+  closePopup(popupEdit);
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
@@ -95,5 +96,11 @@ function formAddSubmitHandler (evt) {
 }
 
 saveButtonPopupAdd.addEventListener('click', formAddSubmitHandler);
+
+// Лайк
+
+function likeHundler (event) {
+  event.target.classList.toggle('element__like_active');
+};
 
 render ();
