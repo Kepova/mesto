@@ -15,7 +15,7 @@ const cards = [
 const template = document.querySelector('.template-item').content;
 const editButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup__edit');
-const closeButton = popupEdit.querySelector('.popup__close-button');
+const closeButton = document.querySelector('.popup__close-button');
 const popupName = popupEdit.querySelector('.popup__input_info_name');
 const popupProfession = popupEdit.querySelector('.popup__input_info_profession');
 const formElement = popupEdit.querySelector('.popup__container');
@@ -29,6 +29,10 @@ const saveButtonPopupAdd = document.querySelector('.popup__add_button_save');
 const inputAddTitle = popupAdd.querySelector('.popup__input_info_title');
 const inputAddImgSrc = popupAdd.querySelector('.popup__input_info_img-src');
 let card;
+const popupImg = document.querySelector('.popup_for_img');
+const popupImgSrc = popupImg.querySelector('.popup__img');
+const popupImgTitle = popupImg.querySelector('.popup__img-title');
+const closeButtonPopupImg = popupImg.querySelector('.popup__img-close-button');
 
 // Добавление карточек
 function renderCards (item) {
@@ -38,7 +42,7 @@ function renderCards (item) {
 
   newCard.querySelector('.element__like').addEventListener('click', likeHundler);
   newCard.querySelector('.element__delete-button').addEventListener('click', deleteCardHendler);
-
+  newCard.querySelector('.element__img').addEventListener('click', popupImgHandler);
   cardsList.append(newCard);
 }
 
@@ -64,6 +68,7 @@ function closePopup(evt) {
 
 closeButton.addEventListener('click', function () {
   closePopup(popupEdit);
+  closePopup(popupImg);
 });
 
 function formSubmitHandler (evt) {
@@ -109,5 +114,22 @@ function likeHundler (evt) {
 function deleteCardHendler (evt) {
   evt.target.closest('.element').remove();
 }
+
+// Попап с картинкой
+function popupImgHandler (evt) {
+  evt.preventDefault();
+
+  openPopup(popupImg);
+  card = evt.target.closest('.element');
+  const imgSrc = card.querySelector('.element__img').src;
+  const title = card.querySelector('.element__title').textContent;
+
+  popupImgSrc.src = imgSrc;
+  popupImgTitle.textContent = title;
+}
+
+closeButtonPopupImg.addEventListener('click', function () {
+  closePopup(popupImg);
+});
 
 render ();

@@ -7,7 +7,7 @@
   background-image: url(../../../images/popup__close.svg);
   background-size: cover;
   position: absolute;
-  left: 438px;
+  right: -40px;
   top: -40px;
   transition: opacity .3s;
 }
@@ -22,6 +22,6 @@
     width: 20px;
     height: 20px;
     top: -36px;
-    left: 262px;
+    right: 0;
   }
 }
