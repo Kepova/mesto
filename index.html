@@ -31,11 +31,21 @@
     </footer>
     <div class="popup popup_for_edit">
       <div class="popup__container">
-        <form class="popup__form popup__form-edit">
+        <form class="popup__form popup__form-edit" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__info">
-            <input type="text" class="popup__input popup__input_info_name" placeholder="Имя">
-            <input type="text" class="popup__input popup__input_info_profession" placeholder="Профессия">
+            <div class="popup__input-container">
+              <input type="text" id="popup__input-name" class="popup__input popup__input_info_name" placeholder="Имя" required minlength="2" maxlength="40">
+              <div class="popup__error-container">
+                <span class="popup__input-name-error popup__error"></span>
+              </div>
+            </div>
+            <div class="popup__input-container">
+              <input type="text" id="popup__input-profession" class="popup__input popup__input_info_profession" placeholder="Профессия" required minlength="2" maxlength="200">
+              <div class="popup__error-container">
+                <span class="popup__input-profession-error popup__error"></span>
+              </div>
+            </div>
           </fieldset>
           <button type="submit" class="popup__save-button">Сохранить</button>
         </form>
@@ -73,6 +83,7 @@
   </div>
   <script type="module" src="./scripts/index.js"></script>
   <script type="module" src="./scripts/cards.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 
 </html>
