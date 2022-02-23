@@ -63,7 +63,7 @@ editButton.addEventListener('click', function () {
 });
 
 function submitProfileForm(evt) {
-  evt.preventDefault();
+  evt.preventDefault()  ;
   profileTitle.textContent = `${popupName.value}`;
   profileSubtitle.textContent = `${popupProfession.value}`;
   closePopup(popupEdit);
