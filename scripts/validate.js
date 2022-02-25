@@ -33,13 +33,17 @@ const hasInvalidInput = (inputs) => {
 
 // Настройка активности кнопки
 
+const disableButton = (button, buttonDisabledClass) => {
+  button.setAttribute('disabled', '');
+  button.classList.add(buttonDisabledClass);
+}
+
 const checkButtonValidity = (inputs, button, { buttonDisabledClass }) => {
   if (!hasInvalidInput(inputs)) {
     button.removeAttribute('disabled');
     button.classList.remove(buttonDisabledClass);
   } else {
-    button.setAttribute('disabled', '');
-    button.classList.add(buttonDisabledClass);
+    disableButton(button, buttonDisabledClass);
   }
 }
 
@@ -71,10 +75,4 @@ const enableValidation = ({ formSelector, inputSelector, saveButtonSelector, ...
   })
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  saveButtonSelector: '.popup__save-button',
-  inputErrorClass: 'popup__input_type-error',
-  buttonDisabledClass: 'popup__save-button_disabled'
-});
+enableValidation(validationConfig);
