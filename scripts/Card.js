@@ -13,6 +13,7 @@ export class Card {
 
   _deleteCardHendler = () => {
     this._newCard.remove();
+    this._newCard = null;
   }
 
   _setEventlisteners() {

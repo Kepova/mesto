@@ -2,16 +2,16 @@ import { validationConfig, cards } from "./utils.js";
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 
-const editButton = document.querySelector('.profile__edit-button');
+const buttonEdit = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_for_edit');
-const closeButtons = document.querySelectorAll('.popup__close-button');
+const buttonsClose = document.querySelectorAll('.popup__close-button');
 const popupName = popupEdit.querySelector('.popup__input_info_name');
 const popupProfession = popupEdit.querySelector('.popup__input_info_profession');
 const formPopupProfile = popupEdit.querySelector('.popup__form-edit');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const cardsList = document.querySelector('.elements');
-const addButton = document.querySelector('.profile__add-button');
+const buttonAdd = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup_for_add');
 const formPopupAdd = popupAdd.querySelector('.popup__form-add');
 const inputAddTitle = popupAdd.querySelector('.popup__input_info_title');
@@ -22,22 +22,27 @@ const popupImgTitle = popupImg.querySelector('.popup__img-title');
 const popupContainers = document.querySelectorAll('.popup');
 
 // Валидация форм
-const editFormValidation = new FormValidator(validationConfig, formPopupProfile);
-const addFormValidation = new FormValidator(validationConfig, formPopupAdd);
+const formEditValidation = new FormValidator(validationConfig, formPopupProfile);
+const formAddValidation = new FormValidator(validationConfig, formPopupAdd);
 
-editFormValidation.enableValidation();
-addFormValidation.enableValidation();
+formEditValidation.enableValidation();
+formAddValidation.enableValidation();
 
 // Добавление карточек
 
 function render(data) {
   const newCard = new Card(data, '.template-item', popupImgHandler);
   const card = newCard.createCards();
+  return card;
+}
+
+function insertCard(data) {
+  const card = render(data);
   cardsList.prepend(card);
 }
 
 cards.forEach((data) => {
-  render(data);
+  insertCard(data);
 })
 
 // Открытие попапа
@@ -54,7 +59,7 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupEsc);
 }
 
-closeButtons.forEach(btn => btn.addEventListener('click', function () {
+buttonsClose.forEach(btn => btn.addEventListener('click', function () {
   closePopup(btn.closest('.popup'));
 }))
 
@@ -77,21 +82,21 @@ const closePopupEsc = (evt) => {
 
 // Попап редактирования профиля
 
-editButton.addEventListener('click', function () {
-  editFormValidation.resetErrors();
+buttonEdit.addEventListener('click', function () {
+  formEditValidation.resetErrors();
 
   popupName.value = profileTitle.textContent;
   popupProfession.value = profileSubtitle.textContent;
 
-  editFormValidation.checkButtonValidity();
+  formEditValidation.checkButtonValidity();
 
   openPopup(popupEdit);
 });
 
 function submitProfileForm(evt) {
   evt.preventDefault();
-  profileTitle.textContent = `${popupName.value}`;
-  profileSubtitle.textContent = `${popupProfession.value}`;
+  profileTitle.textContent = popupName.value;
+  profileSubtitle.textContent = popupProfession.value;
   closePopup(popupEdit);
 }
 
@@ -99,22 +104,17 @@ formPopupProfile.addEventListener('submit', submitProfileForm);
 
 // Попап добавления карточки
 
-addButton.addEventListener('click', function () {
-  addFormValidation.resetErrors();
-  addFormValidation.checkButtonValidity()
+buttonAdd.addEventListener('click', function () {
+  formPopupAdd.reset();
+  formAddValidation.resetErrors();
+  formAddValidation.checkButtonValidity()
   openPopup(popupAdd);
 });
-
-function resetAddForm() {
-  inputAddTitle.value = '';
-  inputAddImgSrc.value = '';
-}
 
 function formAddSubmitHandler(evt) {
   evt.preventDefault();
   const item = { name: inputAddTitle.value, link: inputAddImgSrc.value };
-  render(item);
-  resetAddForm();
+  insertCard(item);
 
   closePopup(popupAdd);
 }

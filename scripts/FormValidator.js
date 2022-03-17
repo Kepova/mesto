@@ -26,22 +26,23 @@ export class FormValidator {
     }
   }
 
-  _showInputError(errorMessage, input) {
+  _showInputError(input) {
+    const errorMessage = this._form.querySelector(`.${input.id}-error`);
     input.classList.add(this._settings.inputErrorClass);
     errorMessage.textContent = input.validationMessage;
   }
 
-  _hideInputError(errorMessage, input) {
+  _hideInputError(input) {
+    const errorMessage = this._form.querySelector(`.${input.id}-error`);
     input.classList.remove(this._settings.inputErrorClass);
     errorMessage.textContent = '';
   }
 
   _checkInputValidity(input) {
-    const errorMessage = this._form.querySelector(`.${input.id}-error`);
     if (input.validity.valid) {
-      this._hideInputError(errorMessage, input);
+      this._hideInputError(input);
     } else {
-      this._showInputError(errorMessage, input);
+      this._showInputError(input);
     }
   }
 
@@ -58,16 +59,13 @@ export class FormValidator {
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._form.checkValidity();
-    })
+    });
     this._setEventListeners();
   }
 
   resetErrors() {
-    this._form.reset();
     this._inputs.forEach((input) => {
-      const errorMessage = this._form.querySelector(`.${input.id}-error`);
-      this._hideInputError(errorMessage, input);
+      this._hideInputError(input);
     });
   }
 }
