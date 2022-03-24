@@ -1,6 +1,7 @@
 import { validationConfig, cards } from "./utils.js";
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
+import { FormValidator } from "./components/FormValidator.js";
+import { Card } from "./components/Card.js";
+import Section from "./components/Section.js"
 
 const buttonEdit = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_for_edit');
@@ -10,7 +11,7 @@ const popupProfession = popupEdit.querySelector('.popup__input_info_profession')
 const formPopupProfile = popupEdit.querySelector('.popup__form-edit');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const cardsList = document.querySelector('.elements');
+// const cardsList = document.querySelector('.elements');
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup_for_add');
 const formPopupAdd = popupAdd.querySelector('.popup__form-add');
@@ -30,20 +31,26 @@ formAddValidation.enableValidation();
 
 // Добавление карточек
 
-function render(data) {
-  const newCard = new Card(data, '.template-item', popupImgHandler);
+// function render(data) {
+//   const newCard = new Card(data, '.template-item', popupImgHandler);
+//   const card = newCard.createCards();
+//   return card;
+// }
+
+const defaultCardsList = new Section ({items: cards, renderer: (cardItem) => {
+  const newCard = new Card(cardItem, '.template-item', popupImgHandler);
   const card = newCard.createCards();
-  return card;
-}
+  defaultCardsList.addItem(card);
+}},
+'.elements')
+// function insertCard(data) {
+//   const card = render(data);
+//   cardsList.prepend(card);
+// }
 
-function insertCard(data) {
-  const card = render(data);
-  cardsList.prepend(card);
-}
-
-cards.forEach((data) => {
-  insertCard(data);
-})
+// cards.forEach((data) => {
+//   insertCard(data);
+// })
 
 // Открытие попапа
 
@@ -129,3 +136,5 @@ function popupImgHandler(item) {
   popupImgSrc.alt = item.name;
   popupImgTitle.textContent = item.name;
 }
+
+defaultCardsList.renderItems();
