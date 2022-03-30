@@ -1,11 +1,11 @@
-import { buttonEdit, popupName, popupProfession, formPopupProfile, buttonAdd, formPopupAdd } from "./utils/constants.js";
-import { validationConfig, cards } from "./utils/utils.js";
-import { FormValidator } from "./components/FormValidator.js";
-import Card from "./components/Card.js";
-import Section from "./components/Section.js";
-import PopupWithImage from "./components/PopupWithImage.js";
-import PopupWithForm from "./components/PopupWithForm.js";
-import UserInfo from "./components/UserInfo.js";
+import { buttonEdit, popupName, popupProfession, formPopupProfile, buttonAdd, formPopupAdd } from "../scripts/utils/constants.js";
+import { validationConfig, cards } from "../scripts/utils/utils.js";
+import { FormValidator } from "../scripts/components/FormValidator.js";
+import Card from "../scripts/components/Card.js";
+import Section from "../scripts/components/Section.js";
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import UserInfo from "../scripts/components/UserInfo.js";
 
 // Валидация форм
 const formEditValidation = new FormValidator(validationConfig, formPopupProfile);
