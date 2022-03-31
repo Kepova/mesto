@@ -1,3 +1,4 @@
+import './index.css';
 import { buttonEdit, popupName, popupProfession, formPopupProfile, buttonAdd, formPopupAdd } from "../scripts/utils/constants.js";
 import { validationConfig, cards } from "../scripts/utils/utils.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
