@@ -7,19 +7,19 @@ export default class Card {
     this._handlerImg = handlerImg;
   }
 
-  _likeHundler = () => {
+  _handleLike = () => {
     this._likeButton.classList.toggle('element__like_active');
   };
 
-  _deleteCardHendler = () => {
+  _handleCardDelete = () => {
     this._newCard.remove();
     this._newCard = null;
   }
 
   _setEventlisteners() {
     const deletButton = this._newCard.querySelector('.element__delete-button');
-    this._likeButton.addEventListener('click', this._likeHundler);
-    deletButton.addEventListener('click', this._deleteCardHendler);
+    this._likeButton.addEventListener('click', this._handleLike);
+    deletButton.addEventListener('click', this._handleCardDelete);
     this._elementImg.addEventListener('click', () => this._handlerImg(this._data));
   }
 
