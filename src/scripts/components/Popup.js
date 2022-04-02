@@ -2,8 +2,6 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
-    this._popupImgSrc = this._popup.querySelector('.popup__img');
-    this._popupImgTitle = this._popup.querySelector('.popup__img-title');
   }
 
   open() {
