@@ -11,7 +11,7 @@ export default class PopupWithForm extends Popup {
     const values = {};
     this._inputs.forEach((input) => {
       values[input.name] = input.value;
-    })
+    });
     return values;
   }
 
@@ -20,10 +20,21 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
   }
 
+  changeSubmitHandler(newSubmitForm) {
+    this._submitForm = newSubmitForm;
+  }
+
+  changeButtonName = (name) => {
+    const buttonSave = this._form.querySelector('.popup__save-button');
+    buttonSave.textContent = name;
+  }
+
   setEventListeners() {
     super.setEventListeners();
-    this._form.addEventListener('submit', () => {
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
       this._submitForm(this._getInputValues());
+      this.changeButtonName('Сохранение...');
       this.close();
     });
   }
