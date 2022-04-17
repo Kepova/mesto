@@ -11,23 +11,16 @@ import { api } from '../scripts/components/Api.js';
 let userId;
 
 //Загрузка начальных данных
-api.getUser()
-  .then(res => {
-    userProfile.setUserInfo(res.name, res.about, res.avatar);
-    userId = res._id;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
-api.getInitialCards()
-  .then(cardList => {
-    cardList.forEach(data => {
-      const card = createCard(data);
-      section.addItem(card);
-    })
+Promise.all([api.getUser(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    // установка данных пользователя
+    userProfile.setUserInfo(userData.name, userData.about, userData.avatar);
+    userId = userData._id;
+    //отрисовка карточек
+    section.renderItems(cards);
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
   });
 
@@ -61,16 +54,19 @@ const createCard = (data) => {
     '.template-item',
     handleCardClick,
     (id) => {
-      deleteCardPopup.changeButtonName('Да');
       deleteCardPopup.open();
       deleteCardPopup.changeSubmitHandler(() => {
         api.deleteCard(id)
           .then(res => {
             newCard.deleteCard();
+            deleteCardPopup.close();
           })
           .catch((err) => {
             console.log(err);
           })
+          .finally(() => {
+            deleteCardPopup.changeButtonName('Да');
+          });
       })
     },
     (id) => {
@@ -117,12 +113,16 @@ const submitProfileForm = (dataUser) => {
   const { name, profession } = dataUser;
 
   api.editProfile(name, profession)
-    .then(() => {
-      userProfile.setUserInfo(name, profession);
+    .then((res) => {
+      userProfile.setUserInfo(name, profession, res.avatar);
+      editForm.close();
     })
     .catch((err) => {
       console.log(err);
     })
+    .finally(() => {
+      editForm.changeButtonName('Сохранить');
+    });
 }
 const editForm = new PopupWithForm('.popup_for_edit', submitProfileForm);
 
@@ -134,7 +134,6 @@ buttonEdit.addEventListener('click', function () {
   editForm.setInputValues(data);
 
   formValidators['edit-form'].checkButtonValidity();
-  editForm.changeButtonName('Сохранить');
   editForm.open();
 });
 
@@ -149,6 +148,9 @@ const submitAvatarForm = (data) => {
     .catch((err) => {
       console.log(err);
     })
+    .finally(() => {
+      avatarPopup.changeButtonName('Сохранить');
+    });
 }
 
 const avatarPopup = new PopupWithForm('.popup_for_avatar', submitAvatarForm);
@@ -160,7 +162,6 @@ avatarImg.addEventListener('click', () => {
   formValidators['change-avatar-form'].checkButtonValidity();
 })
 
-
 // Попап добавления карточки
 const submitCardForm = (preCard) => {
 
@@ -168,15 +169,18 @@ const submitCardForm = (preCard) => {
     .then(res => {
       const card = createCard(res)
       section.addItem(card);
+      addForm.close();
     })
     .catch((err) => {
       console.log(err);
     })
+    .finally(() => {
+      addForm.changeButtonName('Создать');
+    });
 }
 const addForm = new PopupWithForm('.popup_for_add', submitCardForm);
 
 buttonAdd.addEventListener('click', () => {
-  addForm.changeButtonName('Создать');
   addForm.open();
   formValidators['add-form'].resetErrors();
   formValidators['add-form'].checkButtonValidity();
